@@ -3,6 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Product;
+use App\Observers\CategoryObserver;
+use App\Observers\SubcategoryObserver;
+use App\Observers\ProductObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Observers handle slug auto-generation, keeping Models clean (SRP).
+        Category::observe(CategoryObserver::class);
+        Subcategory::observe(SubcategoryObserver::class);
+        Product::observe(ProductObserver::class);
     }
 }
